@@ -17,11 +17,20 @@ public class MainPageElements {
     private By orderButtonTop = By.xpath(".//div[contains(@class, 'Header_Nav')]/button[contains(text(), 'Заказать')]");
     //Кнопка "Заказать" у блока "Как это работает"
     private By orderButtonMiddle = By.xpath(".//div[contains(@class,'Home_FinishButton')]/button[contains(text(), 'Заказать')]");
+    private By logoScooter = By.xpath(".//a[contains(@class,'Header_LogoScooter')]");
+    private By logoYandex = By.xpath(".//a[contains(@class,'Header_LogoYandex')]");
 
     public MainPageElements(WebDriver driver){
         this.driver = driver;
     }
-
+    //Нажать на логотип "Самокат"
+    public void clickLogoScooter(){
+        driver.findElement(logoScooter).click();
+    }
+    //Нажать на логотип "Яндекс"
+    public void clickLogoYandex(){
+        driver.findElement(logoYandex).click();
+    }
     //Нажать кн "Заказать" в шапке
     public void clickOrderButtonTop(){
         driver.findElement(orderButtonTop).click();
