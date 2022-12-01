@@ -70,7 +70,7 @@ public class OrderButtonsTests {
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("disable-gpu");
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(chromeOptions);
         driver.get("https://qa-scooter.praktikum-services.ru/");
         mainPageElements = new MainPageElements(driver);
         orderFormElements = new OrderFormElements(driver);

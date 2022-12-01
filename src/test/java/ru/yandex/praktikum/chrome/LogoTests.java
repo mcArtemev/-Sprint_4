@@ -10,12 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.Set;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
-import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 
 public class LogoTests {
@@ -23,20 +19,17 @@ public class LogoTests {
     private MainPageElements mainPageElements;
     private String mainPageUrl = "https://qa-scooter.praktikum-services.ru/";
     private String yandexUrl = "https://dzen.ru/";
-    private By yandexSiteElement = By.xpath(".//header[contains(@class,'dzen-header-desktop')");
 
     @Before
     public void setUp(){
         WebDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
-        //chromeOptions.addArguments("--no-sandbox");
-        //chromeOptions.addArguments("--headless");
-        //chromeOptions.addArguments("disable-gpu");
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("disable-gpu");
         driver = new ChromeDriver(chromeOptions);
         driver.get("https://qa-scooter.praktikum-services.ru/");
-
         mainPageElements = new MainPageElements(driver);
-
     }
 
     @Test //Проверка перехода на главную страницу сайта после нажатия на логотип "Самокат"
