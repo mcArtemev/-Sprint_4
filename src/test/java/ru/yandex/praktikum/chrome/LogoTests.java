@@ -1,36 +1,15 @@
 package ru.yandex.praktikum.chrome;
 
 import PageObject.MainPageElements;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
+import PageObject.TestFixtures;;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.Set;
 
-
-
-public class LogoTests {
-    private WebDriver driver;
-    private MainPageElements mainPageElements;
+public class LogoTests extends TestFixtures {
+    private MainPageElements mainPageElements = new MainPageElements(driver);
     private String mainPageUrl = "https://qa-scooter.praktikum-services.ru/";
     private String yandexUrl = "https://dzen.ru/";
-
-    @Before
-    public void setUp(){
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("disable-gpu");
-        driver = new ChromeDriver(chromeOptions);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        mainPageElements = new MainPageElements(driver);
-    }
 
     @Test //Проверка перехода на главную страницу сайта после нажатия на логотип "Самокат"
     public void clickLogoScooterFromOrderGoToMainPage(){
@@ -55,10 +34,5 @@ public class LogoTests {
         String URL = driver.getCurrentUrl();
         System.out.println(URL);
         Assert.assertTrue("Страница Яндекс не открыта", URL.contains(yandexUrl));
-    }
-
-    @After
-    public void tearDown(){
-        driver.quit();
     }
 }

@@ -1,19 +1,15 @@
 package ru.yandex.praktikum.chrome;
+
 import PageObject.MainPageElements;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import PageObject.TestFixtures;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 @RunWith(Parameterized.class)
-    public class FaqTests {
-        private WebDriver driver;
-        private MainPageElements mainPageElements;
+    public class FaqTests extends TestFixtures {
+        private MainPageElements mainPageElements = new MainPageElements(driver);
         //Заголовок аккордеона "Вопросы о важном"
         private String dropdownHeader;
         //Раскрывающийся текст элемента аккордеона "Вопросы о важном"
@@ -39,34 +35,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
                 { "Я жизу за МКАДом, привезёте?", "Да, обязательно. Всем самокатов! И Москве, и Московской области.", 7},
         };
     }
-
-    @Before
-    public void setUp(){
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("disable-gpu");
-        driver = new ChromeDriver(chromeOptions);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-
-        mainPageElements = new MainPageElements(driver);
-        //Скролл до блока "Вопросы о важном"
-        mainPageElements.scrollToFaqAccordeon();
-    }
-
     @Test //Проверка раскрытия текста при нажатии на заголовок блока "Вопросы о важном"
     public void clickFaqAccordeonItemCheckDropdownText(){
+        mainPageElements.scrollToFaqAccordeon();
         driver.findElement(mainPageElements.getFaqHeader(itemNumber)).click();
         String actualDropdownText = driver.findElement(mainPageElements.getFaqDropdownText(itemNumber)).getText();
-        new WebDriverWait(driver, 5).until(ExpectedConditions.textToBePresentInElementLocated(mainPageElements.getFaqDropdownText(itemNumber), dropdownText));
+        helpers.waitTextToBePresentInElement(driver, 5, mainPageElements.getFaqDropdownText(itemNumber), dropdownText);
 
         Assert.assertTrue("Текст не соответствует ожиданию. Ожидалось " + dropdownText + " По факту: " + actualDropdownText, dropdownText.contains(actualDropdownText));
     }
-
-    @After
-    public void tearDown(){
-        driver.quit();
-    }
-
 }

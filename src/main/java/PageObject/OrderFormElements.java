@@ -2,12 +2,10 @@ package PageObject;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class OrderFormElements {
-    private WebDriver driver;
+public class OrderFormElements extends TestFixtures{
     //Форма заказа
     private By orderForm = By.xpath(".//div[contains(@class, 'Order_Content')]");
     //Инпут "Имя"
@@ -53,7 +51,7 @@ public class OrderFormElements {
 
     //Ожидание получения формы заказа
     public void waitForOrderForm(){
-        new WebDriverWait(driver, 10).until(driver -> (driver.findElement(orderForm).isDisplayed()));
+        helpers.waitElementDisplayed(driver, 10, orderForm);
     }
 
     //Заполнить поле "Имя"
@@ -149,12 +147,12 @@ public class OrderFormElements {
 
     //Ожидание появления окна подтверждения заказа
     public void waitForOrderConfirmationModal(){
-        new WebDriverWait(driver, 5).until(driver -> (driver.findElement(orderConfirmationModal).isDisplayed()));
+        helpers.waitElementDisplayed(driver, 5, orderConfirmationModal);
     }
 
     //Ожидание появления окна об успешном заказе
     public void waitForSuccessOrderModal(){
-            new WebDriverWait(driver, 5).until(driver -> (driver.findElement(successOrderModal).isDisplayed()));
+        helpers.waitElementDisplayed(driver, 5, successOrderModal);
     }
 
     //Шаги заполнения формы "Для кого самокат"

@@ -5,8 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class MainPageElements {
-    private WebDriver driver;
+public class MainPageElements extends TestFixtures{
     //Блок "Вопросы о важном"
     private By faqAccordeon = By.className("accordion");
     //Заголовок элемента аккордеона
@@ -43,14 +42,12 @@ public class MainPageElements {
 
     //Скролл до кн "Заказать" у блока "Как это работает"
     public void scrollToOrderButtonMiddle(){
-        WebElement element = driver.findElement(orderButtonMiddle);
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+        helpers.scrollToTargetElement(driver, orderButtonMiddle);
     }
 
     //Скролл до блока "Вопросы о важном"
     public void scrollToFaqAccordeon(){
-        WebElement element = driver.findElement(faqAccordeon);
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+        helpers.scrollToTargetElement(driver, faqAccordeon);
     }
 
     //Получить элемент "Заголовок" аккордеона "Вопросы о важном"

@@ -2,24 +2,17 @@ package ru.yandex.praktikum.chrome;
 
 import PageObject.MainPageElements;
 import PageObject.OrderFormElements;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
+import PageObject.TestFixtures;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
 import static PageObject.Helpers.getCalendarDate;
 
 @RunWith(Parameterized.class)
-public class OrderButtonsTests {
-    private WebDriver driver;
-    private MainPageElements mainPageElements;
-    private OrderFormElements orderFormElements;
+public class OrderButtonsTests extends TestFixtures {
+    private MainPageElements mainPageElements = new MainPageElements(driver);
+    private OrderFormElements orderFormElements = new OrderFormElements(driver);
     private String name;
     private String surname;
     private String address;
@@ -61,19 +54,6 @@ public class OrderButtonsTests {
                 {"Канеки","Кен","Аогири,13","Трубная","+79999999999",getCalendarDate(2),"четверо суток","серая безысходность","1000-7", true},
                 {"Сидор","Сидоров","Улочная,55","Лубянка","29999999999",getCalendarDate(3),"семеро суток","оба","", true},
         };
-    }
-
-    @Before
-    public void setUp(){
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("disable-gpu");
-        driver = new ChromeDriver(chromeOptions);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        mainPageElements = new MainPageElements(driver);
-        orderFormElements = new OrderFormElements(driver);
     }
 
     @Test()
@@ -121,10 +101,5 @@ public class OrderButtonsTests {
         orderFormElements.waitForSuccessOrderModal();
         orderFormElements.waitForSuccessOrderModal();
         Assert.assertTrue("Модальное окно \"Заказ оформлен\" не отображается",driver.findElement(orderFormElements.getSuccessOrderModal()).isDisplayed()==isDisplayed);
-    }
-
-    @After
-    public void tearDown(){
-        driver.quit();
     }
 }
